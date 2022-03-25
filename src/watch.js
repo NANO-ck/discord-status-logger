@@ -13,6 +13,7 @@ const status = {
 }
 
 module.exports = async ({id, webhook}, client) => {
+  if(!id || !webhook || !webhook.id|| !webhook.token || !client) return log("error", "Invalid user config")
   const user = await client.users.fetch(id)
   if(!user) return log("error", "Couldn't find user with ID " + id)
   const channel = new WebhookClient(webhook)
