@@ -3,11 +3,13 @@
 const { Client, Intents } = require('discord.js')
 const { readdirSync } = require('fs')
 const log = require("src/log.js")
+const config = require("config.js")
+const watch = require("src/watch.js")
 
 log("log", "Launching the bot...", true)
 log("log", `Running NodeJS ${process.version}`);
 
-const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: 5635 }) // https://ziad87.net/intents/ to calculate intents
+const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: 513 }) // https://ziad87.net/intents/ to calculate intents
 
 /* 
 Partials: 
@@ -18,29 +20,13 @@ MESSAGE
 REACTION
 */
 
-client.config = require("./config.json")
-
-/**
- * # Events handler
- * Petit script qui chargera le fichier index.js de tout les event inscrit dans le dossier events
- */
-
-console.log("\nChargement des évenements\n\n###############\n")
-readdirSync('./events').forEach((event) => {
-	const index = require(`./events/${event}/index.js`)
-	client.on(event, (...params) => index({ client, params }))
-	console.log(`Évenement ${event} chargé!`)
+client.login(config.token).then(() => {
+	module.exports =  client
+	log("log", `Connected to ${client.user.tag}`, true)
+	log(client.guilds.cache.size == 0 ? "error" : "log", client.guilds.cache.size + client.guilds.cache.size)
+	log("log", "Invite the bot using this link: https://discord.com/oauth2/authorize?scope=bot&permissions=8&client_id="+client.user.id)
+	config.users.map(user => {
+		watch(user)
+	})
 })
-console.log("\nTous les évènements ont étés chargés!\n\n###############\n")
-
-console.log("Chargement des commandes\n\n###############\n")
-client.commands = []
-readdirSync('./events/messageCreate/commands').map((file) => {
-	const cmd = require(`./events/messageCreate/commands/${file}`)
-	client.commands.push(cmd)
-	console.log(`Commande ${cmd.config.name} chargée!`)
-})
-console.log(`\nTotal: ${client.commands.length} commandes\n###############\n`)
-
-client.login(client.config.token).then(() => {module.exports =  client})
 
