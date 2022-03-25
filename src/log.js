@@ -7,9 +7,9 @@ const { statusChannel } = require("../config.js")
 const colors = {
     error: '\x1b[31m',
     warn: '\x1b[33m',
-    reset: '\x1b[0m'
+    log: '\x1b[0m'
 }
 
 module.exports = (type, message, success) => {
-  console[type]((success ? '\x1b[32m' : colors[type]) + message + colors.reset)
+  console[type]((success ? '\x1b[32m' : colors[type]) + message)
 }
