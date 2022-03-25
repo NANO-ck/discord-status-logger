@@ -11,5 +11,5 @@ const colors = {
 }
 
 module.exports = (type, message, success) => {
-  console[type]((success ? '\x1b[32m' : colors[type]) + message + reset)
+  console[type]((success ? '\x1b[32m' : colors[type]) + message + colors.reset)
 }
