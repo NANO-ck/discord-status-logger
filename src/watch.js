@@ -4,7 +4,7 @@
 
 const { WebhookClient } = require("discord.js")
 const client = require("../index.js")
-const log = require("log.js")
+const log = require("./log.js")
 
 const status = {
   dnd: {text: "⛔ Do Not Disturb", color: 0xff6600},
