@@ -4,7 +4,8 @@ const { Client, Intents } = require('discord.js')
 const { readdirSync } = require('fs')
 const log = require("src/log.js")
 
-log("log", "Launching the bot...")
+log("log", "Launching the bot...", true)
+log("log", `Running ${process.version}`);
 
 const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: 5635 }) // https://ziad87.net/intents/ to calculate intents
 
