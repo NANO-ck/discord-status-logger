@@ -26,7 +26,7 @@ client.login(config.token).then(() => {
 	log(client.guilds.cache.size == 0 ? "error" : "log", client.guilds.cache.size + client.guilds.cache.size)
 	log("log", "Invite the bot using this link: https://discord.com/oauth2/authorize?scope=bot&permissions=8&client_id="+client.user.id)
 	config.users.map(user => {
-		watch(user)
+		watch(user, client)
 	})
 	log("log", "Watching on "+config.users.length+" users", true)
 })
