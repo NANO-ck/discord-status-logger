@@ -1,0 +1,33 @@
+{
+  "name": "Discord Status Logger",
+  "version": "1.0.0",
+  "description": "A Discord bot to log the connections of one or more users. ",
+  "keywords": [
+    "discord status logger"
+  ],
+  "homepage": "https://github.com/NANO-ck/discord-status-logger",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/NANO-ck/discord-status-logger"
+  },
+  "author": {
+    "name": "lonestar125 & NANO-ck"
+  },
+  "scripts": {
+    "run": "index.js"
+  },
+  "contributors": [
+    {
+      "name": "lonestar125",
+      "url": "https://github.com/lonestar125"
+    },
+    {
+      "name": "NANO-ck",
+      "email": "nano@nexion.xyz",
+      "url": "https://github.com/NANO-ck"
+    }
+  ],
+  "dependencies": {
+    "discord.js": "13.6.0"
+  }
+}
