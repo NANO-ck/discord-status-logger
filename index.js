@@ -23,7 +23,7 @@ REACTION
 client.login(config.token).then(() => {
 	module.exports =  client
 	log("log", `Connected to ${client.user.tag}`, true)
-	log(client.guilds.cache.size == 0 ? "error" : "log", client.guilds.cache.size + client.guilds.cache.size)
+	log(client.guilds.cache.size == 0 ? "error" : "log", client.guilds.cache.size + " guilds")
 	log("log", "Invite the bot using this link: https://discord.com/oauth2/authorize?scope=bot&permissions=8&client_id="+client.user.id)
 	config.users.map(user => {
 		watch(user, client)
