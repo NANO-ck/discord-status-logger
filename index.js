@@ -2,9 +2,9 @@
 
 const { Client, Intents } = require('discord.js')
 const { readdirSync } = require('fs')
-const log = require("src/log.js")
-const config = require("config.js")
-const watch = require("src/watch.js")
+const log = require("./src/log.js")
+const config = require("./config.js")
+const watch = require("./src/watch.js")
 
 log("log", "Launching the bot...", true)
 log("log", `Running NodeJS ${process.version}`);
