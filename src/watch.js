@@ -3,7 +3,6 @@
 // This file is triggered for each user entered in the config.js
 
 const { WebhookClient } = require("discord.js")
-const client = require("../index.js")
 const log = require("./log.js")
 
 const status = {
@@ -13,7 +12,7 @@ const status = {
   offline: {text: "⚫ Offline", color: 0xff6600},
 }
 
-module.exports = async ({id, webhook}) => {
+module.exports = async ({id, webhook}, client) => {
   const user = await client.users.fetch(id)
   if(!user) return log("error", "Couldn't find user with ID " + id)
   const channel = new WebhookClient(webhook)
