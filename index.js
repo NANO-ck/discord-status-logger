@@ -28,5 +28,6 @@ client.login(config.token).then(() => {
 	config.users.map(user => {
 		watch(user)
 	})
+	log("log", "Watching on "+config.users.length+" users, true)
 })
 
