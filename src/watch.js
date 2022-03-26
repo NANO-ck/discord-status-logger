@@ -5,11 +5,31 @@
 const { WebhookClient } = require("discord.js")
 const log = require("./log.js")
 
+function equalArrays(firstArray, secondArray) {
+   if(!Array.isArray(firstArray) || !Array.isArray(secondArray) || firstArray.length !== secondArray.length) return false
+   const tempFirstArray = firstArray.concat().sort();
+   const tempSecondArray = secondArray.concat().sort();
+   for (let i = 0; i < tempFirstArray.length; i++) {
+      if (tempFirstArray[i] !== tempSecondArray[i])
+         return false;
+   }
+   return true;
+}
+
 const status = {
   dnd: {text: "⛔ Do Not Disturb", color: 0xff6600},
   idle: {text: "🌙 Idle", color: 0xff6600},
   online: {text: "🟢 Online", color: 0xff6600},
   offline: {text: "⚫ Offline", color: 0xff6600},
+}
+
+function sendStatus(channel, status, devices) {
+  channel.send({embeds:[{
+    title: status[status].text,
+    description: `Device(s): ${devices.join(", ")}`,
+    color: status[status].color,
+    timestamp: Date.now()
+  }]})
 }
 
 module.exports = async ({id, webhook}, client) => {
@@ -25,6 +45,10 @@ module.exports = async ({id, webhook}, client) => {
   log("log", "Successfully watching on " + user.tag)
   
   let status = member.presence.status
+  let devices = Object.entries(member.presence.clientStatus).map(x => x[0])
+  console.table({status: status, devices: devices})
+  
+  
   
   channel.send({embeds:[{
     title: status[status].text,
