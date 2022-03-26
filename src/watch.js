@@ -16,7 +16,7 @@ module.exports = async ({id, webhook}, client) => {
   if(!id || !webhook || !webhook.id|| !webhook.token || !client) return log("error", "Invalid user config")
   const user = await client.users.fetch(id)
   if(!user) return log("error", "Couldn't find user with ID " + id)
-  const mutualGuild = await client.guilds.cache.filter(x => x.member(id)).first()
+  const mutualGuild = await client.guilds.cache.filter(x => x.members.fetch(id).then(() => true).catch(() => false)).first()
   if(!mutualGuild || !mutualGuild.name) return log("error", "No mutual guild with user ID "+id)
   const member = await mutualGuild.members.fetch(id)
   if(!member) return log("error", "An unexpected error occured while attempting to get member of mutual guild with ID "+id+". This may be an error with the cache.")
