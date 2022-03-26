@@ -13,7 +13,7 @@ const status = {
 
 module.exports = (event, user, channel, status, devices) => {
   if(!event || !user || !user.tag || !channel || !status || !devices) return log("error", "Missing variable in event.js")
-  if(!["connect", "disconnect", "statusUpdate", "deviceUpdate"].includes(event)) return log("error", "Incorrect event type in event.js")
+  if(!["statusUpdate", "deviceUpdate"].includes(event)) return log("error", "Incorrect event type in event.js")
   
   channel.send({embeds:[{
           title: status[status].text,
