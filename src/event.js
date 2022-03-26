@@ -4,7 +4,7 @@
 
 const log = require("./log.js")
 
-const status = {
+const embed = {
   dnd: {text: "⛔ Do Not Disturb", color: 0xFF0000},
   idle: {text: "🌙 Idle", color: 0xFFEE00},
   online: {text: "🟢 Online", color: 0x0DFF00},
@@ -16,9 +16,9 @@ module.exports = (event, user, channel, status, devices) => {
   if(!["statusUpdate", "deviceUpdate"].includes(event)) return log("error", "Incorrect event type in event.js")
   
   channel.send({embeds:[{
-    title: status[status].text,
+    title: embed[status].text,
     description: `Device(s): ${devices.length == 0 ? "None" : devices.join(", ")}`,
-    color: status[status].color,
+    color: embed[status].color,
     timestamp: Date.now()
   }]})
 
