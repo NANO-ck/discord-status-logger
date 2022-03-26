@@ -4,6 +4,13 @@
 
 const log = require("./log.js")
 
+const status = {
+  dnd: {text: "⛔ Do Not Disturb", color: 0xff6600},
+  idle: {text: "🌙 Idle", color: 0xff6600},
+  online: {text: "🟢 Online", color: 0xff6600},
+  offline: {text: "⚫ Offline", color: 0xff6600},
+}
+
 module.exports = (event, user, channel, status, devices) => {
   if(!event || !user || !user.tag || !channel || !status || !devices) return log("error", "Missing variable in event.js")
   if(!["connect", "disconnect", "statusUpdate", "deviceUpdate"].includes(event)) return log("error", "Incorrect event type in event.js")
