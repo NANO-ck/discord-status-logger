@@ -9,7 +9,7 @@ const watch = require("./src/watch.js")
 log("log", "Launching the bot...", true)
 log("log", `Running NodeJS ${process.version}`);
 
-const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: 513 }) // https://ziad87.net/intents/ to calculate intents
+const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: 771 }) // https://ziad87.net/intents/ to calculate intents
 
 /* 
 Partials: 
