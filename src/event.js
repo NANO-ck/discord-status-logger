@@ -21,4 +21,13 @@ module.exports = (event, user, channel, status, devices) => {
           color: status[status].color,
           timestamp: Date.now()
         }]})
+  
+  function sendStatus(channel, status, devices) {
+    channel.send({embeds:[{
+      title: status[status].text,
+      description: `Device(s): ${devices.join(", ")}`,
+      color: status[status].color,
+      timestamp: Date.now()
+    }]})
+  }
 }
