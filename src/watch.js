@@ -4,6 +4,8 @@
 
 const { WebhookClient } = require("discord.js")
 const log = require("./log.js")
+const config = require("../config.js")
+const event = require("./event.js")
 
 function equalArrays(firstArray, secondArray) {
    if(!Array.isArray(firstArray) || !Array.isArray(secondArray) || firstArray.length !== secondArray.length) return false
@@ -14,22 +16,6 @@ function equalArrays(firstArray, secondArray) {
          return false;
    }
    return true;
-}
-
-const status = {
-  dnd: {text: "⛔ Do Not Disturb", color: 0xff6600},
-  idle: {text: "🌙 Idle", color: 0xff6600},
-  online: {text: "🟢 Online", color: 0xff6600},
-  offline: {text: "⚫ Offline", color: 0xff6600},
-}
-
-function sendStatus(channel, status, devices) {
-  channel.send({embeds:[{
-    title: status[status].text,
-    description: `Device(s): ${devices.join(", ")}`,
-    color: status[status].color,
-    timestamp: Date.now()
-  }]})
 }
 
 module.exports = async ({id, webhook}, client) => {
@@ -48,24 +34,18 @@ module.exports = async ({id, webhook}, client) => {
   let devices = Object.entries(member.presence.clientStatus).map(x => x[0])
   console.table({status: status, devices: devices})
   
-  
-  
-  channel.send({embeds:[{
-    title: status[status].text,
-    description: `Device(s): Object.entries(member.presence.clientStatus).map(x => x[0]).join(", ")`,
-    color: status[status].color,
-    timestamp: Date.now()
-  }]})
-  setInterval(function(){
-      const currentStatus = member.presence.status
-      if(status !== currentStatus) {
-        channel.send({embeds:[{
-          title: status[status].text,
-          description: `Device(s): Object.entries(member.presence.clientStatus).map(x => x[0]).join(", ")`,
-          color: status[status].color,
-          timestamp: Date.now()
-        }]})
-        status = currentStatus        
-      }
-  }, 2500);
+  setInterval(() => {
+   if((status == member.presence.status) && equalArrays(devices, Object.entries(member.presence.clientStatus).map(x => x[0]))) return // Nothing changed since last time
+   if(status != member.presence.status) { // Status Changed
+      status = member.presence.status
+      devices = Object.entries(member.presence.clientStatus).map(x => x[0])
+      event("statusUpdate", user, channel, status, devices)
+   } else if(!equalArrays(devices, Object.entries(member.presence.clientStatus).map(x => x[0]))) { // User devices changed
+      status = member.presence.status
+      devices = Object.entries(member.presence.clientStatus).map(x => x[0])
+      event("deviceUpdate", user, channel, status, devices)
+   } else {
+      log("error", "Something went wrong watch.js line 59")
+   }
+  }, config.interval*1000)
 }
