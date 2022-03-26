@@ -24,20 +24,20 @@ module.exports = async ({id, webhook}, client) => {
   if(!channel.send({content: "✅ Successfully watching on "+user.tag}).then(() => true).catch(()  => false)) return log("error", "Invalid webhook creditentials for user with ID " + id)
   log("log", "Successfully watching on " + user.tag)
   
-  let status = user.presence.status
+  let status = member.presence.status
   
   channel.send({embeds:[{
     title: status[status].text,
-    description: `Device(s): Object.entries(user.presence.clientStatus).map(x => x[0]).join(", ")`,
+    description: `Device(s): Object.entries(member.presence.clientStatus).map(x => x[0]).join(", ")`,
     color: status[status].color,
     timestamp: Date.now()
   }]})
   setInterval(function(){
-      const currentStatus = user.presence.status
+      const currentStatus = member.presence.status
       if(status !== currentStatus) {
         channel.send({embeds:[{
           title: status[status].text,
-          description: `Device(s): Object.entries(user.presence.clientStatus).map(x => x[0]).join(", ")`,
+          description: `Device(s): Object.entries(member.presence.clientStatus).map(x => x[0]).join(", ")`,
           color: status[status].color,
           timestamp: Date.now()
         }]})
